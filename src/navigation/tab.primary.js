@@ -5,6 +5,7 @@ import HomeStackNavigator from './stack.home';
 import MineStackNavigator from './stack.mine';
 import ExchangeStackNavigator from './stack.exchange';
 import DAppStackNavigator from './stack.dapp';
+import CrytpoDashboardNavigator from './stack.cryptoDashboard'
 import TabBar from './components/bottom.tab';
 import color from '../assets/styles/color';
 
@@ -44,6 +45,13 @@ const PrimaryTabNavigator = createBottomTabNavigator(
       path: 'dapp',
       navigationOptions: {
         title: 'root.DApp',
+      },
+    },
+    CryptoDashboard: {
+      screen: CrytpoDashboardNavigator,
+      path: 'cryptoDashboard',
+      navigationOptions: {
+        title: 'Dashboard',
       },
     },
     Mine: {
@@ -94,6 +102,9 @@ const PrimaryTabNavigator = createBottomTabNavigator(
             img = spendLight;
             break;
           case 'DApp':
+            img = dappLight;
+            break;
+          case 'CryptoDashboard':
             img = dappLight;
             break;
           default:

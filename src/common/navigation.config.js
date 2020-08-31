@@ -44,6 +44,8 @@ import RnsCreateName from '../pages/wallet/rns/create';
 import RnsStatus from '../pages/wallet/rns/status';
 import AddReadOnlyWallet from '../pages/wallet/readonly/add';
 import AddReadOnlyWalletConfirmation from '../pages/wallet/readonly/confirm';
+import CryptoDashboard from '../pages/cryptoDashboard';
+
 
 const defaultNavigationOptions = () => ({ navigation }) => {
   common.currentNavigation = navigation;
@@ -246,6 +248,15 @@ const routeConfigMap = {
       path: 'ExchangeIndex',
       navigationOptions: () => ({
         header: null,
+      }),
+    },
+  },
+  cryptoDashboard: {
+    CryptoDashboard: {
+      screen: CryptoDashboard,
+      path: 'CryptoDashboard',
+      navigationOptions: () => ({
+        headerTitle: 'Crytpo Dashboard',
       }),
     },
   },
