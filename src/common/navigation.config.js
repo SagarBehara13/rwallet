@@ -45,6 +45,7 @@ import RnsStatus from '../pages/wallet/rns/status';
 import AddReadOnlyWallet from '../pages/wallet/readonly/add';
 import AddReadOnlyWalletConfirmation from '../pages/wallet/readonly/confirm';
 import CryptoDashboard from '../pages/cryptoDashboard';
+import ListingDetail from '../pages/cryptoDashboard/ListingDetail';
 
 
 const defaultNavigationOptions = () => ({ navigation }) => {
@@ -256,9 +257,16 @@ const routeConfigMap = {
       screen: CryptoDashboard,
       path: 'CryptoDashboard',
       navigationOptions: () => ({
-        headerTitle: 'Crytpo Dashboard',
+        header: null
       }),
     },
+    ListingDetail: {
+      screen: ListingDetail,
+      path: 'ListingDetail',
+      navigationOptions: () => ({
+        header: null
+      }),
+    }
   },
   mine: {
     MineIndex: {
