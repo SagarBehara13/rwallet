@@ -44,8 +44,8 @@ import RnsCreateName from '../pages/wallet/rns/create';
 import RnsStatus from '../pages/wallet/rns/status';
 import AddReadOnlyWallet from '../pages/wallet/readonly/add';
 import AddReadOnlyWalletConfirmation from '../pages/wallet/readonly/confirm';
-import CryptoDashboard from '../pages/cryptoDashboard';
-import ListingDetail from '../pages/cryptoDashboard/ListingDetail';
+import CryptoDashboard from '../pages/dashboard';
+import ListingDetail from '../pages/dashboard/ListingDetail';
 
 
 const defaultNavigationOptions = () => ({ navigation }) => {

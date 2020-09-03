@@ -1,29 +1,26 @@
+import moment from 'moment'
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import moment from 'moment'
-import { Container, Header, Content, Thumbnail, Card, CardItem, Text, Icon, Right, Body, Left } from 'native-base';
+import { Container, Header, Content, Thumbnail, Button, Card, CardItem, Text, Title, Right, Body, Left } from 'native-base';
 
 
 const styles = StyleSheet.create({
-  container: {
+  theme: {
     backgroundColor: '#33313b',
   },
-  header: {
-    backgroundColor: '#33313b',
+  headerBody: {
+    alignItems: 'center'
   },
-  text: {
-    color: "#000",
-    fontSize: 14,
-    fontWeight: "bold"
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    fontFamily: 'Avenir-Heavy',
   },
-  code: {
-    marginTop: 12,
-    padding: 12,
-    borderRadius: 8,
-    color: "#666",
-    backgroundColor: "#eaeaea"
-  }
+  contentContainer: {
+    padding: 10,
+  },
 });
+
 
 
 class ListingDetail extends Component {
@@ -36,9 +33,13 @@ class ListingDetail extends Component {
     const item = this.props.navigation.getParam('item', {});;
 
     return (
-      <Container>
-        <Header />
-        <Content>
+      <Container style={styles.theme}>
+        <Header style={styles.theme}>
+          <Body style={styles.headerBody}>
+            <Title style={styles.headerText}>Coin Details</Title>
+          </Body>
+        </Header>
+        <Content style={styles.contentContainer}>
           <Card>
             <CardItem header>
               <Left>
@@ -50,7 +51,7 @@ class ListingDetail extends Component {
               </Left>
               <Right>
                 <Text note>
-                  {`${moment(`${item.last_updated}`).format('YYYY-MM-DD, h:mm a')}`}
+                  {`${moment(`${item.last_updated}`).format('DD/MM/YY, h:mm a')}`}
                 </Text>
                 <Text note>{`Curr. $${item.current_price.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
               </Right>
@@ -144,6 +145,19 @@ class ListingDetail extends Component {
               </Body>
             </CardItem>
           </Card>
+          <CardItem style={styles.theme}>
+            <Body>
+              <Button bordered light>
+                <Text>Top Highlishts</Text>
+              </Button>
+            </Body>
+            <Body>
+              <Button bordered light>
+                <Text>Latest News</Text>
+              </Button>
+
+            </Body>
+          </CardItem>
         </Content>
       </Container>
     );
