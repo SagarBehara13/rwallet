@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Container, Header, Content, Thumbnail, Button, Card, CardItem, Text, Title, Right, Body, Left } from 'native-base';
 
+import * as news from '../../api/news'
+
 
 const styles = StyleSheet.create({
   theme: {
@@ -27,6 +29,13 @@ class ListingDetail extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      news: null
+    }
+  }
+
+  componentDidMount() {
+    news.getTopNews().then(res => this.setState({ news: res })).catch(res => this.setState({ news: res }))
   }
 
   render() {
@@ -155,7 +164,6 @@ class ListingDetail extends Component {
               <Button bordered light>
                 <Text>Latest News</Text>
               </Button>
-
             </Body>
           </CardItem>
         </Content>

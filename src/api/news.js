@@ -1,7 +1,7 @@
 import CryptoControl from 'crypto-news-api'
 
 
-const Api = new CryptoControl('API_KEY_HERE')
+const Api = new CryptoControl('08a503b653180bbabafc4f269b678353')
 
 
 export const getTopNews = (language = 'en') => Api.getTopNews(language)

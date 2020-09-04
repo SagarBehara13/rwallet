@@ -46,6 +46,8 @@ import AddReadOnlyWallet from '../pages/wallet/readonly/add';
 import AddReadOnlyWalletConfirmation from '../pages/wallet/readonly/confirm';
 import CryptoDashboard from '../pages/dashboard';
 import ListingDetail from '../pages/dashboard/ListingDetail';
+import NewsDashboard from '../pages/news';
+import NewsDetail from '../pages/news/NewsDetails';
 
 
 const defaultNavigationOptions = () => ({ navigation }) => {
@@ -263,6 +265,22 @@ const routeConfigMap = {
     ListingDetail: {
       screen: ListingDetail,
       path: 'ListingDetail',
+      navigationOptions: () => ({
+        header: null
+      }),
+    }
+  },
+  newsDashboard: {
+    NewsDashboard: {
+      screen: NewsDashboard,
+      path: 'NewsDashboard',
+      navigationOptions: () => ({
+        header: null
+      }),
+    },
+    NewsDetail: {
+      screen: NewsDetail,
+      path: 'NewsDetail',
       navigationOptions: () => ({
         header: null
       }),
