@@ -20,17 +20,25 @@ const styles = StyleSheet.create({
   listText: {
     color: 'white',
     fontFamily: 'Avenir-Heavy',
+    marginTop: 10,
+    marginLeft: 10
+  },
+  listName: {
+    marginLeft: 10
   },
   contentContainer: {
     padding: 10,
     marginBottom: 1,
   },
   listItem: {
-    marginTop: 15,
+    marginTop: 10,
     marginLeft: 2,
     borderWidth: 1,
     borderColor: 'grey',
     borderRadius: 10
+  },
+  imgLogo: {
+    marginLeft: 15
   }
 });
 
@@ -63,10 +71,10 @@ class CryptoDashboard extends Component {
         onPress={() => navigate('ListingDetail', { item: item })}
       >
         <Left>
-          <Thumbnail source={{ uri: item.image }} />
+          <Thumbnail style={styles.imgLogo} source={{ uri: item.image }} />
           <Body>
             <Text style={styles.listText}>{`${item.symbol.toUpperCase()}`}</Text>
-            <Text note>{`${item.name}`}</Text>
+            <Text style={styles.listName} note>{`${item.name}`}</Text>
           </Body>
         </Left>
         <Right>

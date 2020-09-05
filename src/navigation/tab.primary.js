@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import HomeStackNavigator from './stack.home';
 import MineStackNavigator from './stack.mine';
@@ -14,7 +14,7 @@ import homeLight from '../assets/images/root/tab/wallet.l.png';
 import MineLight from '../assets/images/root/tab/mine.l.png';
 import spendLight from '../assets/images/root/tab/spend.l.png';
 import dappLight from '../assets/images/root/tab/dapp.l.png';
-
+import newsIcon from '../assets/images/root/tab/news.png'
 
 const styles = StyleSheet.create({
   tabBarView: {
@@ -116,7 +116,9 @@ const PrimaryTabNavigator = createBottomTabNavigator(
             img = dappLight;
             break;
           case 'NewsDashboard':
-            img = dappLight;
+            widht = 22;
+            height = 22;
+            img = newsIcon;
             break;
           default:
             console.error(`unexpected tab：${navigation.state.routeName}`);
@@ -139,8 +141,9 @@ const PrimaryTabNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
+      scrollEnabled: true,
       activeTintColor: color.ceriseRed,
-      inactiveTintColor: color.gray,
+      inactiveTintColor: color.gray
     },
   },
 );

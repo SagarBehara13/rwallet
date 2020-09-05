@@ -1,5 +1,6 @@
 import { PARSE_SERVER_URL, RWALLET_API_KEY, RWALLET_ENV } from 'react-native-dotenv';
 import { isEmpty } from 'lodash';
+console.log(PARSE_SERVER_URL);
 
 if (isEmpty(PARSE_SERVER_URL)) {
   throw new Error('PARSE_SERVER_URL needs to be defined in .env under the root.');

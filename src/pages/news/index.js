@@ -1,10 +1,14 @@
 import moment from 'moment'
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, ScrollView } from 'react-native';
+import { FlatList, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { Container, Header, Separator, Content, Spinner, ListItem, Left, Body, Right, Thumbnail, Text, Title } from 'native-base';
 
 import { getTopNews, getLatestNews } from '../../api/news'
 
+const config = {
+  deviceWidth: Dimensions.get('window').width,
+  deviceHeight: Dimensions.get('window').height
+}
 
 const styles = StyleSheet.create({
   theme: {

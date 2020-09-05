@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir-Heavy',
   },
   contentContainer: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 
