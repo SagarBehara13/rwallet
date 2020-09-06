@@ -1,14 +1,20 @@
-import moment from 'moment'
+import moment from 'moment';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Thumbnail, Button, Card, CardItem, Text, Title, Right, Body, Left } from 'native-base';
+import { Container, Header, Content, Thumbnail, Button } from 'native-base';
+import { Card, CardItem, Text, Title, Right, Body, Left } from 'native-base';
 
+import SparklineChart from './Sparkline'
 import * as news from '../../api/news'
 
 
 const styles = StyleSheet.create({
   theme: {
+    color: 'white',
     backgroundColor: '#33313b',
+  },
+  whiteColor: {
+    color: 'white',
   },
   headerBody: {
     alignItems: 'center'
@@ -20,9 +26,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 10
+  },
+  chartText: {
+    alignSelf: 'flex-start',
   }
 });
-
 
 
 class ListingDetail extends Component {
@@ -48,124 +56,140 @@ class ListingDetail extends Component {
             <Title style={styles.headerText}>Coin Details</Title>
           </Body>
         </Header>
-        <Content style={styles.contentContainer}>
-          <Card>
-            <CardItem header>
-              <Left>
-                <Thumbnail source={{ uri: item.image }} />
+        <Content>
+          <Content style={styles.contentContainer}>
+            <Card>
+              <CardItem header>
+                <Left>
+                  <Thumbnail source={{ uri: item.image }} />
+                  <Body>
+                    <Text>{`${item.symbol.toUpperCase()}`}</Text>
+                    <Text note>{`${item.name}, #${item.market_cap_rank}`}</Text>
+                  </Body>
+                </Left>
+                <Right>
+                  <Text note>
+                    {`${moment(`${item.last_updated}`).format('DD/MM/YY, h:mm a')}`}
+                  </Text>
+                  <Text note>
+                    {`Curr. $${item.current_price.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                  </Text>
+                </Right>
+              </CardItem>
+              <CardItem>
                 <Body>
-                  <Text>{`${item.symbol.toUpperCase()}`}</Text>
-                  <Text note>{`${item.name}, #${item.market_cap_rank}`}</Text>
+                  <Text>{`1h % Change`}</Text>
+                  <Text note>
+                    {
+                      `${item.price_change_percentage_1h_in_currency ?
+                        item.price_change_percentage_1h_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
+                        '-'}`
+                    }
+                  </Text>
                 </Body>
-              </Left>
-              <Right>
-                <Text note>
-                  {`${moment(`${item.last_updated}`).format('DD/MM/YY, h:mm a')}`}
-                </Text>
-                <Text note>{`Curr. $${item.current_price.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>{`1h % Change`}</Text>
-                <Text note>
-                  {
-                    `${item.price_change_percentage_1h_in_currency ?
-                      item.price_change_percentage_1h_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-              <Body>
-                <Text>{`24h % Change`}</Text>
-                <Text note>
-                  {
-                    `${item.price_change_percentage_24h_in_currency ?
-                      item.price_change_percentage_24h_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>{`24h Price change`}</Text>
-                <Text note>
-                  {
-                    `${item.price_change_24h ?
-                      '$' + item.price_change_24h.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-              <Body>
-                <Text>{`24h Low`}</Text>
-                <Text note>
-                  {
-                    `${item.low_24h ?
-                      '$' + item.low_24h.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>{`7d % Change`}</Text>
-                <Text note>
-                  {
-                    `${item.price_change_percentage_7d_in_currency ?
-                      item.price_change_percentage_7d_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-              <Body>
-                <Text>{`Total Volume`}</Text>
-                <Text note>
-                  {
-                    `${item.total_volume ?
-                      item.total_volume.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>{`Market Cap.`}</Text>
-                <Text note>
-                  {
-                    `${item.market_cap ?
-                      item.market_cap.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-              <Body>
-                <Text>{`24h Market cap.`}</Text>
-                <Text note>
-                  {
-                    `${item.market_cap_change_percentage_24h ?
-                      item.market_cap_change_percentage_24h.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <CardItem style={styles.theme}>
+                <Body>
+                  <Text>{`24h % Change`}</Text>
+                  <Text note>
+                    {
+                      `${item.price_change_percentage_24h_in_currency ?
+                        item.price_change_percentage_24h_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>{`24h Price change`}</Text>
+                  <Text note>
+                    {
+                      `${item.price_change_24h ?
+                        '$' + item.price_change_24h.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+                <Body>
+                  <Text>{`24h Low`}</Text>
+                  <Text note>
+                    {
+                      `${item.low_24h ?
+                        '$' + item.low_24h.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>{`7d % Change`}</Text>
+                  <Text note>
+                    {
+                      `${item.price_change_percentage_7d_in_currency ?
+                        item.price_change_percentage_7d_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+                <Body>
+                  <Text>{`Total Volume`}</Text>
+                  <Text note>
+                    {
+                      `${item.total_volume ?
+                        item.total_volume.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>{`Market Cap.`}</Text>
+                  <Text note>
+                    {
+                      `${item.market_cap ?
+                        item.market_cap.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+                <Body>
+                  <Text>{`24h Market cap.`}</Text>
+                  <Text note>
+                    {
+                      `${item.market_cap_change_percentage_24h ?
+                        item.market_cap_change_percentage_24h.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
+                        '-'}`
+                    }
+                  </Text>
+                </Body>
+              </CardItem>
+            </Card>
+          </Content>
+          <Content style={styles.contentContainer}>
             <Body>
-              <Button bordered light>
-                <Text>Top Highlishts</Text>
-              </Button>
+              <Text style={[styles.whiteColor, styles.chartText]}>Last 7 day overview</Text>
+              <SparklineChart
+                date={Date.parse(item.last_updated)}
+                data={item.sparkline_in_7d.price}
+                days={7}
+              />
             </Body>
-            <Body>
-              <Button bordered light>
-                <Text>Latest News</Text>
-              </Button>
-            </Body>
-          </CardItem>
+          </Content>
+          <Content>
+            <CardItem style={styles.theme}>
+              <Body>
+                <Button bordered light>
+                  <Text>Top Highlights</Text>
+                </Button>
+              </Body>
+              <Body>
+                <Button bordered light>
+                  <Text>Latest News</Text>
+                </Button>
+              </Body>
+            </CardItem>
+          </Content>
         </Content>
       </Container>
     );
