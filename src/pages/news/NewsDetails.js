@@ -1,14 +1,20 @@
 import moment from 'moment'
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Thumbnail, Button, Card, CardItem, Text, Title, Right, Body, Left } from 'native-base';
+import { StyleSheet, Image, ScrollView } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Text, Title, Body, Icon, Right, Left } from 'native-base';
 
-import * as news from '../../api/news'
+import onShare from '../../components/common/share'
 
 
 const styles = StyleSheet.create({
   theme: {
     backgroundColor: '#33313b',
+  },
+  justifyText: {
+    textAlign: 'justify'
+  },
+  leftAlignText: {
+    textAlign: 'left'
   },
   headerBody: {
     alignItems: 'center'
@@ -16,7 +22,11 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: 'bold',
     fontSize: 20,
+    textAlign: 'justify',
     fontFamily: 'Avenir-Heavy',
+  },
+  categoryContainerAlign: {
+    marginLeft: 0,
   },
   contentContainer: {
     padding: 10,
@@ -28,14 +38,6 @@ const styles = StyleSheet.create({
 class ListingDetail extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      news: null
-    }
-  }
-
-  componentDidMount() {
-    news.getTopNews().then(res => this.setState({ news: res })).catch(res => this.setState({ news: res }))
   }
 
   render() {
@@ -48,43 +50,54 @@ class ListingDetail extends Component {
             <Title style={styles.headerText}>News Details</Title>
           </Body>
         </Header>
-        <Content style={styles.contentContainer}>
-          <Card>
-            <CardItem header>
-              <Left>
-                <Thumbnail source={{ uri: item.thumbnail }} />
+        <ScrollView>
+          <Content style={styles.contentContainer}>
+            <Card>
+              <CardItem header>
                 <Body>
-                  <Text>{`${item.title}`}</Text>
-                  <Text note>{`${item.sourceName}`}</Text>
+                  <Text style={styles.leftAlignText}>{`${item.title}`}</Text>
+                  <Text style={styles.justifyText} note>
+                    {`${item.sourceName || item.sourceDomain || 'Anonymous'}`}
+                    {`, ${moment(`${item.publishedAt || new Date()}`).format('DD/MM/YY, h:mm a')}`}
+                  </Text>
                 </Body>
-              </Left>
-              <Right>
-                <Text note>
-                  {`${moment(`${item.publishedAt}`).format('DD/MM/YY, h:mm a')}`}
-                </Text>
-                <Text note>{`${item.sourceDomaing}`}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text note>
-                  {
-                    `${item.price_change_percentage_1h_in_currency ?
-                      item.price_change_percentage_1h_in_currency.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' :
-                      '-'}`
-                  }
-                </Text>
-              </Body>
-              <Body>
-                <Text note>
-                  {
-                    `${item.description}`
-                  }
-                </Text>
-              </Body>
-            </CardItem>
-          </Card>
-        </Content>
+              </CardItem>
+              <CardItem cardBody>
+                <Image
+                  source={{ uri: item.thumbnail || item.originalImageUrl }}
+                  style={{ height: 200, width: null, flex: 1 }}
+                />
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text style={styles.justifyText}>
+                    {
+                      `${item.description}`
+                    }
+                  </Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Text
+                    style={styles.categoryContainerAlign}
+                    note
+                  >
+                    #{`${item.primaryCategory}`}
+                  </Text>
+                </Left>
+                <Right>
+                  <Icon
+                    name='paper-plane'
+                    onPress={() => {
+                      onShare(item.description, item.url, item.title)
+                    }}
+                  />
+                </Right>
+              </CardItem>
+            </Card>
+          </Content>
+        </ScrollView>
       </Container>
     );
 

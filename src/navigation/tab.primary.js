@@ -52,14 +52,14 @@ const PrimaryTabNavigator = createBottomTabNavigator(
       screen: CrytpoDashboardNavigator,
       path: 'cryptoDashboard',
       navigationOptions: {
-        title: 'Dashboard',
+        title: 'Top 100',
       },
     },
     NewsDashboard: {
       screen: NewsDashboardNavigator,
       path: 'newsDashboard',
       navigationOptions: {
-        title: 'Top updates',
+        title: 'News',
       },
     },
     Mine: {
@@ -99,6 +99,8 @@ const PrimaryTabNavigator = createBottomTabNavigator(
         let height = 18;
         switch (navigation.state.routeName) {
           case 'Home':
+            widht = 22;
+            height = 22;
             img = homeLight;
             break;
           case 'Mine':
@@ -107,12 +109,18 @@ const PrimaryTabNavigator = createBottomTabNavigator(
             img = MineLight;
             break;
           case 'Exchange':
+            widht = 22;
+            height = 22;
             img = spendLight;
             break;
           case 'DApp':
+            widht = 22;
+            height = 22;
             img = dappLight;
             break;
           case 'CryptoDashboard':
+            widht = 22;
+            height = 22;
             img = dappLight;
             break;
           case 'NewsDashboard':
