@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   carouselContainer: {
     alignSelf: 'baseline'
   },
-  card: {
-    height: 100
+  cardItem: {
+    minHeight: 150
   }
 });
 
@@ -48,8 +48,8 @@ export default class RecommendationCarousel extends PureComponent {
 
   render() {
     const renderItem = ({ item, index }) => (
-      <Card style={styles.card}>
-        <CardItem>
+      <Card>
+        <CardItem style={styles.cardItem}>
           <Body>
             <Text style={styles.leftAlignText}>{`${item.title}`}</Text>
             <Text style={styles.justifyText} note>
