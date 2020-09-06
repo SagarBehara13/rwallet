@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Image, ScrollView } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Text, Title, Body, Icon, Right, Left } from 'native-base';
 
+import RecommendationCarousel from './recommendations'
 import onShare from '../../components/common/share'
 
 
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
-
 
 
 class ListingDetail extends Component {
@@ -83,7 +83,8 @@ class ListingDetail extends Component {
                     style={styles.categoryContainerAlign}
                     note
                   >
-                    #{`${item.primaryCategory}`}
+                    #{`${item.primaryCategory.toLowerCase()}`}
+                    {item.coins.map(c => `, #${c.tradingSymbol.toLowerCase()}`)}
                   </Text>
                 </Left>
                 <Right>
@@ -97,6 +98,7 @@ class ListingDetail extends Component {
               </CardItem>
             </Card>
           </Content>
+          <RecommendationCarousel recommendations={item.similarArticles} />
         </ScrollView>
       </Container>
     );
